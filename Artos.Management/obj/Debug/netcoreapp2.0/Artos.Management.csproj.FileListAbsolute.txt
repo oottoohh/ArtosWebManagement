@@ -1,0 +1,11 @@
+C:\Users\ottoh\source\repos\artosdev\Artos\Artos.Management\bin\Debug\netcoreapp2.0\Artos.Management.deps.json
+C:\Users\ottoh\source\repos\artosdev\Artos\Artos.Management\bin\Debug\netcoreapp2.0\Artos.Management.runtimeconfig.json
+C:\Users\ottoh\source\repos\artosdev\Artos\Artos.Management\bin\Debug\netcoreapp2.0\Artos.Management.runtimeconfig.dev.json
+C:\Users\ottoh\source\repos\artosdev\Artos\Artos.Management\bin\Debug\netcoreapp2.0\Artos.Management.dll
+C:\Users\ottoh\source\repos\artosdev\Artos\Artos.Management\bin\Debug\netcoreapp2.0\Artos.Management.pdb
+C:\Users\ottoh\source\repos\artosdev\Artos\Artos.Management\obj\Debug\netcoreapp2.0\Artos.Management.csprojResolveAssemblyReference.cache
+C:\Users\ottoh\source\repos\artosdev\Artos\Artos.Management\obj\Debug\netcoreapp2.0\Artos.Management.csproj.CoreCompileInputs.cache
+C:\Users\ottoh\source\repos\artosdev\Artos\Artos.Management\obj\Debug\netcoreapp2.0\Artos.Management.AssemblyInfoInputs.cache
+C:\Users\ottoh\source\repos\artosdev\Artos\Artos.Management\obj\Debug\netcoreapp2.0\Artos.Management.AssemblyInfo.cs
+C:\Users\ottoh\source\repos\artosdev\Artos\Artos.Management\obj\Debug\netcoreapp2.0\Artos.Management.dll
+C:\Users\ottoh\source\repos\artosdev\Artos\Artos.Management\obj\Debug\netcoreapp2.0\Artos.Management.pdb
