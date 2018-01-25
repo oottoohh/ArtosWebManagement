@@ -1,0 +1,74 @@
+﻿@model EmoneyValidModel
+@{
+   ViewData["Title"] = "Create E-money";
+}
+
+<div class="row">
+    <div class="col-xs-12">
+        <div class="jumbotron">
+            <h2>Create E-Money Data</h2>
+            <hr>
+        </div>
+    </div>
+    <div class="col-md-6 col-md-offset-3">
+            <form method="post">
+                    <div class="form-group">
+                        <label asp-for="CardName" class="control-label"></label>
+                        <input asp-for="CardName" class="form-control" />
+                        <span asp-validation-for="CardName" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Provider" class="control-label"></label>
+                        <input asp-for="Provider" class="form-control" />
+                        <span asp-validation-for="Provider" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="LogoUrl" class="control-label"></label>
+                        <input asp-for="LogoUrl" class="form-control" />
+                        <span asp-validation-for="LogoUrl" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <input type="submit" value="Create" class="btn btn-success" onclick="CreateEmoney" />
+                        <a asp-route="Index" class="btn btn-danger">Cancel</a>
+                    </div>
+                </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script>
+        function CreateEmoney() {
+           
+            var tempID = function () {
+                // Math.random should be unique because of its seeding algorithm.
+                // Convert it to base 36 (numbers + letters), and grab the first 9 characters
+                // after the decimal.
+                return '_' + Math.random().toString(36).substr(2, 9);
+            };
+      var ID = IDMNY + tempID;
+        var Emoneydata = {
+            id: ID,
+            cardName: $("#CardName").val(),
+            provider: $("#Provider").val(),
+            logoUrl: $("#LogoUrl").val()
+        }
+        console.dir(Emoneydata);
+        $.ajax({
+            url: 'http://localhost:5001/api/EMoneys',
+            type: 'post',
+            dataType: 'json',
+            data: Emoneydata,
+            success: function (data) {
+                alert('Succes');
+            },
+            error: function (requestObject, error, errorThrown) {
+                alert(error);
+                alert(errorThrown);
+            }
+            
+        });
+    }
+    </script>
+}
+

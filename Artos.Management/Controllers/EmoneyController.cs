@@ -11,41 +11,33 @@ using Artos.Management.Models;
 using Newtonsoft.Json.Linq;
 using IdentityModel.Client;
 
+// For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+
 namespace Artos.Management.Controllers
 {
-    public class HomeController : Controller
+    public class EmoneyController : Controller
     {
+        // GET: /<controller>/
         [Authorize]
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
+            var accessToken = await HttpContext.GetTokenAsync("access_token");
+
+            var client = new HttpClient();
+            client.SetBearerToken(accessToken);
+            //var content = await client.GetStringAsync("http://localhost:5001/api/EMoneys");
+
+            //ViewBag.Json = JArray.Parse(content).ToString();
+
+            ViewData["Token"] = accessToken;
             return View();
         }
 
         [Authorize]
-        public IActionResult About()
-        {
-            ViewData["Message"] = "Your application description page.";
-
-            return View();
-        }
-
-        public IActionResult Contact()
-        {
-            ViewData["Message"] = "Your contact page.";
-
-            return View();
-        }
-
-        public IActionResult Emoney()
-        {
-            return View();
-        }
-
         public IActionResult CreateEmoney()
         {
             return View();
         }
-
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });

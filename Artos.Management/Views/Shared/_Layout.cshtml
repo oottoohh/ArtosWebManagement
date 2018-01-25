@@ -6,34 +6,36 @@
     <title>@ViewData["Title"] - Artos Management</title>
 
     <environment include="Development">
-        <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
+        <link rel="stylesheet" href="~/bower_components/bootstrap/dist/css/bootstrap.min.css">
         <!-- Font Awesome -->
-        <link rel="stylesheet" href="bower_components/font-awesome/css/font-awesome.min.css">
+        <link rel="stylesheet" href="~/bower_components/font-awesome/css/font-awesome.min.css">
         <!-- Ionicons -->
-        <link rel="stylesheet" href="bower_components/Ionicons/css/ionicons.min.css">
+        <link rel="stylesheet" href="~/bower_components/Ionicons/css/ionicons.min.css">
+        <link rel="stylesheet" href="~/bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css">
         <!-- Theme style -->
-        <link rel="stylesheet" href="dist/css/AdminLTE.min.css">
+        <link rel="stylesheet" href="~/dist/css/AdminLTE.min.css">
         <!-- AdminLTE Skins. Choose a skin from the css/skins
          folder instead of downloading all of them to reduce the load. -->
-        <link rel="stylesheet" href="dist/css/skins/_all-skins.min.css">
+        <link rel="stylesheet" href="~/dist/css/skins/_all-skins.min.css">
         <!-- Morris chart -->
-        <link rel="stylesheet" href="bower_components/morris.js/morris.css">
+        <link rel="stylesheet" href="~/bower_components/morris.js/morris.css">
         <!-- jvectormap -->
-        <link rel="stylesheet" href="bower_components/jvectormap/jquery-jvectormap.css">
+        <link rel="stylesheet" href="~/bower_components/jvectormap/jquery-jvectormap.css">
         <!-- Date Picker -->
-        <link rel="stylesheet" href="bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css">
+        <link rel="stylesheet" href="~/bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css">
         <!-- Daterange picker -->
-        <link rel="stylesheet" href="bower_components/bootstrap-daterangepicker/daterangepicker.css">
+        <link rel="stylesheet" href="~/bower_components/bootstrap-daterangepicker/daterangepicker.css">
         <!-- bootstrap wysihtml5 - text editor -->
         <link rel="stylesheet" href="~/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.js">
         <!-- Google Font -->
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
+        <!-- Custom Style -->
+        <link rel="stylesheet" href="~/css/Custom-style.css" media="all" />
     </environment>
     <environment exclude="Development">
         <link rel="stylesheet" href="https://ajax.aspnetcdn.com/ajax/bootstrap/3.3.7/css/bootstrap.min.css"
               asp-fallback-href="~/lib/bootstrap/dist/css/bootstrap.min.css"
               asp-fallback-test-class="sr-only" asp-fallback-test-property="position" asp-fallback-test-value="absolute" />
-        <link rel="stylesheet" href="~/css/site.min.css" asp-append-version="true" />
     </environment>
 </head>
 <body class="hold-transition skin-blue sidebar-mini">
@@ -344,22 +346,29 @@
                         </a>
                     </li>
                     <li class="treeview">
-                        <a href="pages/tables/data.html">
+                        <a href="#">
                             <i class="fa fa-user"></i> <span>User</span>
                             <span class="pull-right-container">
                                 <i class="fa fa-angle-left pull-right"></i>
                             </span>
                         </a>
                         <ul class="treeview-menu">
-                            <li><a asp-page="/UserData"><i class="fa fa-users"></i> User Data</a></li>
-                            <li><a asp-page="/CardData"><i class="fa fa-credit-card"></i> Card Data</a></li>
-                            <li><a asp-page="/E-MoneyData"><i class="fa fa-money"></i> E-money Data</a></li>
+                            <li><a asp-controller="Home" asp-action="Index"><i class="fa fa-users"></i> User Data</a></li>
+                            <li><a href="CardData"><i class="fa fa-credit-card"></i> Card Data</a></li>
+                            <li><a asp-controller="Emoney" asp-action="Index"><i class="fa fa-money"></i> E-money Data</a></li>
                         </ul>
                     </li>
-                    <li>
-                        <a asp-page="/TransportationData">
+                    <li class="treeview">
+                        <a href="#">
                             <i class="fa fa-bus"></i> <span>Transportation</span>
+                            <span class="pull-right-container">
+                                <i class="fa fa-angle-left pull-right"></i>
+                            </span>
                         </a>
+                        <ul class="treeview-menu">
+                            <li><a asp-controller="Transportation" asp-action="Index"><i class="fa fa-users"></i> Transportation Data</a></li>
+                            <li><a asp-controller="Transportation" asp-action="Route"><i class="fa fa-tasks"></i> Route</a></li>
+                        </ul>
                     </li>
                     <li>
                         <a asp-page="/TransactionType">
@@ -392,11 +401,11 @@
             <section class="content-header">
                 <h1>
                     Dashboard
-                    <small>Control panel</small>
                 </h1>
                 <ol class="breadcrumb">
                     <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-                    <li class="active">Dashboard</li>
+                    <li><a href="#"> User</a></li>
+                    <li class="active">@ViewData["Title"]</li>
                 </ol>
             </section>
             <!-- Main content -->
@@ -410,7 +419,7 @@
             <div class="pull-right hidden-xs">
                 <b>Version</b> 1.0
             </div>
-            <strong>Copyright &copy; 2018 <a href="#">Artos</a>.</strong> All rights
+            <strong>Copyright &copy; @DateTime.Now.Year <a href="#">Artos</a>.</strong> All rights
             reserved.
         </footer>
         <!-- Control Sidebar -->
@@ -418,42 +427,47 @@
 
     <environment include="Development">
         <!-- jQuery 3 -->
-        <script src="bower_components/jquery/dist/jquery.min.js"></script>
+        <script src="~/bower_components/jquery/dist/jquery.min.js"></script>
         <!-- jQuery UI 1.11.4 -->
-        <script src="bower_components/jquery-ui/jquery-ui.min.js"></script>
+        <script src="~/bower_components/jquery-ui/jquery-ui.min.js"></script>
         <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
         <script>
             $.widget.bridge('uibutton', $.ui.button);
         </script>
         <!-- Bootstrap 3.3.7 -->
-        <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+        <script src="~/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
         <!-- Morris.js charts -->
-        <script src="bower_components/raphael/raphael.min.js"></script>
-        <script src="bower_components/morris.js/morris.min.js"></script>
+        <script src="~/bower_components/raphael/raphael.min.js"></script>
+        <script src="~/bower_components/morris.js/morris.min.js"></script>
         <!-- Sparkline -->
-        <script src="bower_components/jquery-sparkline/dist/jquery.sparkline.min.js"></script>
+        <script src="~/bower_components/jquery-sparkline/dist/jquery.sparkline.min.js"></script>
         <!-- jvectormap -->
-        <script src="plugins/jvectormap/jquery-jvectormap-1.2.2.min.js"></script>
-        <script src="plugins/jvectormap/jquery-jvectormap-world-mill-en.js"></script>
+        <script src="~/plugins/jvectormap/jquery-jvectormap-1.2.2.min.js"></script>
+        <script src="~/plugins/jvectormap/jquery-jvectormap-world-mill-en.js"></script>
         <!-- jQuery Knob Chart -->
-        <script src="bower_components/jquery-knob/dist/jquery.knob.min.js"></script>
+        <script src="~/bower_components/jquery-knob/dist/jquery.knob.min.js"></script>
         <!-- daterangepicker -->
-        <script src="bower_components/moment/min/moment.min.js"></script>
-        <script src="bower_components/bootstrap-daterangepicker/daterangepicker.js"></script>
+        <script src="~/bower_components/moment/min/moment.min.js"></script>        
+        <script src="~/bower_components/bootstrap-daterangepicker/daterangepicker.js"></script>
         <!-- datepicker -->
-        <script src="bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
+        <script src="~/bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
         <!-- Bootstrap WYSIHTML5 -->
-        <script src="plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js"></script>
+        <script src="~/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js"></script>
         <!-- Slimscroll -->
-        <script src="bower_components/jquery-slimscroll/jquery.slimscroll.min.js"></script>
+        <script src="~/bower_components/jquery-slimscroll/jquery.slimscroll.min.js"></script>
         <!-- FastClick -->
-        <script src="bower_components/fastclick/lib/fastclick.js"></script>
+        <script src="~/bower_components/fastclick/lib/fastclick.js"></script>
         <!-- AdminLTE App -->
-        <script src="dist/js/adminlte.min.js"></script>
-        <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
-        <script src="dist/js/pages/dashboard.js"></script>
-        <!-- AdminLTE for demo purposes -->
-        <script src="dist/js/demo.js"></script>
+        <script src="~/dist/js/adminlte.min.js"></script>
+        <!-- Data Table-->
+        <script src="~/bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
+        <script src="~/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
+
+        <script>
+            $(function () {
+                $('#DataTable').DataTable()
+            })
+        </script>
 
     </environment>
 
