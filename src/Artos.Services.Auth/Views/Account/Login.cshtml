@@ -1,0 +1,97 @@
+﻿@model LoginViewModel
+
+<div class="row">
+    <div class="col-sm-6 col-sm-offset-3 form-box">
+        <div class="form-top">
+            <div class="form-top-left">
+                <h3>Login to our site</h3>
+                <p>Enter your username and password to log on:</p>
+            </div>
+            <div class="form-top-right">
+                <i class="fa fa-lock" aria-hidden="true"></i>
+            </div>
+        </div>
+
+        @Html.Partial("_ValidationSummary")
+
+
+        @if (Model.EnableLocalLogin)
+        {
+            <div class="form-bottom">
+                <form asp-route="Login" class="login-form">
+                    <input type="hidden" asp-for="ReturnUrl" />
+                    <div class="form-group">
+                        <label class="sr-only" asp-for="Username">Username</label>
+                        <input type="text" asp-for="Username" placeholder="Username..." class="form-username form-control" id="form-username" autofocus>
+                    </div>
+                    <div class="form-group">
+                        <label class="sr-only" asp-for="Password">Password</label>
+                        <input type="password" asp-for="Password" placeholder="Password..." class="form-password form-control" id="form-password" autocomplete="off">
+                    </div>
+                    <div class="row">
+                        @if (Model.AllowRememberLogin)
+                        {
+                            <div class="form-group login-remember">
+                                <label asp-for="RememberLogin">
+                                    <input asp-for="RememberLogin">
+                                    <strong>Remember My Login</strong>
+                                </label>
+                            </div>
+                        }
+                    </div>
+                    <button class="btn btn-primary" name="button" value="login">Sign in!</button>
+                </form>
+            </div>
+        }
+
+        @if (Model.VisibleExternalProviders.Any())
+        {
+            <div class="col-md-6 col-sm-6 external-providers">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">External Login</h3>
+                    </div>
+                    <div class="panel-body">
+                        <ul class="list-inline">
+                            @foreach (var provider in Model.VisibleExternalProviders)
+                            {
+                                <li>
+                                    <a class="btn btn-default"
+                                       asp-action="ExternalLogin"
+                                       asp-route-provider="@provider.AuthenticationScheme"
+                                       asp-route-returnUrl="@Model.ReturnUrl">
+                                        @provider.DisplayName
+                                    </a>
+                                </li>
+                            }
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        }
+
+        @if (!Model.EnableLocalLogin && !Model.VisibleExternalProviders.Any())
+        {
+            <div class="alert alert-warning">
+                <strong>Invalid login request</strong>
+                There are no login schemes configured for this client.
+            </div>
+        }
+    </div>
+</div>
+<div class="row">
+    <div class="col-sm-6 col-sm-offset-3 social-login">
+        <h3>...or login with:</h3>
+        <div class="social-login-buttons">
+            <a class="btn btn-link-2" href="#">
+                <i class="fa fa-facebook"></i> Facebook
+            </a>
+            <a class="btn btn-link-2" href="#">
+                <i class="fa fa-twitter"></i> Twitter
+            </a>
+            <a class="btn btn-link-2" href="#">
+                <i class="fa fa-google-plus"></i> Google Plus
+            </a>
+        </div>
+    </div>
+</div>

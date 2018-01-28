@@ -1,0 +1,66 @@
+﻿@using IdentityServer4.Extensions
+@{
+    string name = null;
+    if (!true.Equals(ViewData["signed-out"]))
+    {
+        name = Context.User?.GetDisplayName();
+    }
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Artos | Management</title>
+
+    <link rel="stylesheet" href="~/css/bootstrap.css" />
+    <link rel="stylesheet" href="~/css/font-awesome.css" media="all" />
+    <link rel="stylesheet" href="~/css/form-elements.css" media="all" />
+    <link rel="stylesheet" href="~/css/login-style.css" media="all" />
+    <link rel="stylesheet" href="~/css/site.css" />
+
+    <!-- Favicon and touch icons -->
+    <link rel="shortcut icon" href="~/ico/favicon.png">
+    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="~/ico/apple-touch-icon-144-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="~/ico/apple-touch-icon-114-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="~/ico/apple-touch-icon-72-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" href="~/ico/apple-touch-icon-57-precomposed.png">
+
+</head>
+<body>
+    <div class="top-content">
+        <div class="inner-bg">
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-8 col-sm-offset-2 text">
+                        <h1><strong>Artos</strong> Management</h1>
+                        <div class="description">
+                            <p>
+                                @*description here*@
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                @RenderBody()
+            </div>
+        </div>
+    </div>
+    <script src="~/lib/jquery/jquery.js"></script>
+    <script src="~/lib/bootstrap/js/bootstrap.js"></script>
+    <script src="~/js/jquery.backstretch.js"></script>
+    <script src="~/js/bg-script.js"></script>
+    @RenderSection("scripts", required: false)
+</body>
+</html>
+@*@if (!string.IsNullOrWhiteSpace(name))
+    {
+        <ul class="nav navbar-nav">
+            <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">@name <b class="caret"></b></a>
+                <ul class="dropdown-menu">
+                    <li><a asp-action="Logout" asp-controller="Account">Logout</a></li>
+                </ul>
+            </li>
+        </ul>
+    }*@

@@ -1,0 +1,180 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Artos.Services.Transaction</name>
+    </assembly>
+    <members>
+        <member name="M:Artos.Services.Transaction.Controllers.ContactController.SendMessage(Artos.Entities.Contact)">
+            <summary>
+            send message from mobile app
+            </summary>
+            <param name="value"></param>  
+        </member>
+        <member name="M:Artos.Services.Transaction.Controllers.EMoneyController.GetCardListForUser(System.Int32)">
+            <summary>
+            get list of card that belong to user
+            </summary>
+            <param name="UserId"></param>  
+        </member>
+        <member name="M:Artos.Services.Transaction.Controllers.EMoneyController.SetDefaultCard(System.Int32,System.Int32)">
+            <summary>
+            set default card for user
+            </summary>
+            <param name="UserId"></param>  
+            <param name="CardId"></param>  
+        </member>
+        <member name="M:Artos.Services.Transaction.Controllers.EMoneyController.GetDefaultCard(System.Int32)">
+            <summary>
+            get default card for user
+            </summary>
+            <param name="UserId"></param>  
+        </member>
+        <member name="M:Artos.Services.Transaction.Controllers.EMoneyController.AddCards(System.Collections.Generic.List{Artos.Entities.UserCard})">
+            <summary>
+            add user cards
+            </summary>
+            <param name="userCards"></param>  
+        </member>
+        <member name="M:Artos.Services.Transaction.Controllers.EMoneyController.ValidateCard(System.String,System.String)">
+            <summary>
+            Validate Card
+            </summary>
+            <param name="CardNumber"></param>  
+            <param name="ProviderId"></param>  
+        </member>
+        <member name="M:Artos.Services.Transaction.Controllers.EMoneyController.RemoveCard(System.Int64)">
+            <summary>
+            Remove Card
+            </summary>
+            <param name="CardId"></param>  
+        </member>
+        <member name="M:Artos.Services.Transaction.Controllers.EMoneyController.GetCardList">
+            <summary>
+            get all emoney card and provider
+            </summary>
+        </member>
+        <member name="M:Artos.Services.Transaction.Controllers.EMoneyController.GetTransactionByCardNo(System.Int64,System.String)">
+            <summary>
+            get card transaction by userid and cardnumber
+            </summary>
+             <param name="UserId"></param>  
+            <param name="CardNumber"></param>  
+        </member>
+        <member name="M:Artos.Services.Transaction.Controllers.EMoneyController.GetCardTransactionByDate(System.Int64,System.String,System.DateTime)">
+            <summary>
+            get card transaction by date
+            </summary>
+             <param name="UserId"></param>  
+            <param name="CardNumber"></param>  
+             <param name="SelectedDate"></param>  
+        </member>
+        <member name="M:Artos.Services.Transaction.Controllers.EMoneyController.GetTransactionDateList(System.Int64)">
+            <summary>
+            get transaction date list per user
+            </summary>
+             <param name="UserId"></param>  
+        </member>
+        <member name="M:Artos.Services.Transaction.Controllers.SettingController.GetStaticContent">
+            <summary>
+            get all static content (page, etc)
+            </summary>
+        </member>
+        <member name="M:Artos.Services.Transaction.Controllers.SettingController.GetGlobalConfig">
+            <summary>
+            get global config
+            </summary>
+        </member>
+        <member name="M:Artos.Services.Transaction.Controllers.TicketController.CreateTicket(Artos.Services.Transaction.Controllers.TicketRequestCls)">
+            <summary>
+            create ticket
+            </summary>
+            <param name="value"></param>  
+        </member>
+        <member name="M:Artos.Services.Transaction.Controllers.TicketController.GetActiveTicket(System.Int32)">
+            <summary>
+            get active ticket for user
+            </summary>
+            <param name="UserId"></param>  
+        </member>
+        <member name="M:Artos.Services.Transaction.Controllers.TicketController.GetTicketListForUser(System.Int32)">
+            <summary>
+            get list ticket for user
+            </summary>
+            <param name="UserId"></param>  
+        </member>
+        <member name="M:Artos.Services.Transaction.Controllers.TicketController.GetTicketListByDate(System.Int32,System.DateTime)">
+            <summary>
+            get list ticket by date for user
+            </summary>
+            <param name="UserId"></param>  
+            <param name="SelectedDate"></param>  
+        </member>
+        <member name="M:Artos.Services.Transaction.Controllers.TicketController.CanCreateTicket(System.Int32)">
+            <summary>
+            check if user can create ticket
+            </summary>
+            <param name="UserId"></param>  
+        </member>
+        <member name="M:Artos.Services.Transaction.Controllers.TicketController.CheckQRCode(System.String)">
+            <summary>
+            check qr code, is it valid
+            </summary>
+            <param name="QRCode"></param>  
+        </member>
+        <member name="M:Artos.Services.Transaction.Controllers.TicketController.CreateTicketNo(Artos.Entities.TicketGenerator)">
+            <summary>
+            create ticket no
+            </summary>
+            <param name="value"></param>  
+        </member>
+        <member name="M:Artos.Services.Transaction.Controllers.UserProfileController.Register(Artos.Services.Transaction.Controllers.RegisterCls)">
+            <summary>
+            Register user from mobile app
+            </summary>
+            <param name="value"></param>  
+        </member>
+        <member name="M:Artos.Services.Transaction.Controllers.UserProfileController.ReSendOTP(Artos.Services.Transaction.Controllers.ReSendOTPCls)">
+            <summary>
+            re-send otp number and invalidate previous number
+            </summary>
+            <param name="value"></param>  
+        </member>
+        <member name="M:Artos.Services.Transaction.Controllers.UserProfileController.ValidateOTP(Artos.Services.Transaction.Controllers.ReSendOTPCls)">
+            <summary>
+            change status otp to validated and set to non active
+            </summary>
+            <param name="value"></param>  
+        </member>
+        <member name="M:Artos.Services.Transaction.Controllers.UserProfileController.Login(Artos.Services.Transaction.Controllers.LoginCls)">
+            <summary>
+            Login user from mobile app
+            </summary>
+            <param name="login"></param>  
+        </member>
+        <member name="M:Artos.Services.Transaction.Controllers.UserProfileController.ResetUserPassword(Artos.Services.Transaction.Controllers.ResetPassCls)">
+            <summary>
+            reset user password
+            </summary>
+            <param name="value"></param>  
+        </member>
+        <member name="M:Artos.Services.Transaction.Controllers.UserProfileController.ChangeUserPassword(Artos.Services.Transaction.Controllers.ChangePasswordCls)">
+            <summary>
+            change user password
+            </summary>
+            <param name="value"></param>  
+        </member>
+        <member name="M:Artos.Services.Transaction.Controllers.UserProfileController.GetUserProfile(System.Int32)">
+            <summary>
+            get user profile by user id
+            </summary>
+            <param name="UserId"></param>  
+        </member>
+        <member name="M:Artos.Services.Transaction.Controllers.UserProfileController.SaveUserProfile(System.Int64,Artos.Services.Transaction.Controllers.SaveUserProfileCls)">
+            <summary>
+            save user profile
+            </summary>
+            <param name="value"></param>  
+            <param name="UserId"></param> 
+        </member>
+    </members>
+</doc>

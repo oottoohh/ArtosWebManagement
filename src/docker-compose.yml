@@ -1,0 +1,32 @@
+version: '3'
+
+services:
+  artos.services.auth:
+    image: artos.services.auth
+    build:
+      context: ./Artos.Services.Auth
+      dockerfile: Dockerfile
+
+  artos.services.data:
+    image: artos.services.data
+    build:
+      context: ./Artos.Services.Data
+      dockerfile: Dockerfile
+
+  artos.services.transaction:
+    image: artos.services.transaction
+    build:
+      context: ./Artos.Services.Transaction
+      dockerfile: Dockerfile
+
+  artos.web.management:
+    image: artos.web.management
+    build:
+      context: ./Artos.Web.Management
+      dockerfile: Dockerfile
+
+  artos.management:
+    image: artos.management
+    build:
+      context: ./../Artos.Management
+      dockerfile: Dockerfile
