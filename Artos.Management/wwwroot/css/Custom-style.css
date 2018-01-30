@@ -4,3 +4,7 @@
 {
     padding:30px !important;
 }
+table > tbody > td > .btn-crud
+{
+    margin: 10px !important;
+}

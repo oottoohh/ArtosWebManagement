@@ -11,7 +11,7 @@
         </div>
     </div>
     <div class="col-md-6 col-md-offset-3">
-            <form method="post">
+            <form asp-action="Create">
                     <div class="form-group">
                         <label asp-for="CardName" class="control-label"></label>
                         <input asp-for="CardName" class="form-control" />
@@ -28,7 +28,7 @@
                         <span asp-validation-for="LogoUrl" class="text-danger"></span>
                     </div>
                     <div class="form-group">
-                        <input type="submit" value="Create" class="btn btn-success" onclick="CreateEmoney" />
+                        <input type="submit" value="Create" class="btn btn-success"  />
                         <a asp-route="Index" class="btn btn-danger">Cancel</a>
                     </div>
                 </form>
@@ -38,37 +38,36 @@
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
     <script>
-        function CreateEmoney() {
-           
-            var tempID = function () {
-                // Math.random should be unique because of its seeding algorithm.
-                // Convert it to base 36 (numbers + letters), and grab the first 9 characters
-                // after the decimal.
-                return '_' + Math.random().toString(36).substr(2, 9);
-            };
-      var ID = IDMNY + tempID;
-        var Emoneydata = {
-            id: ID,
-            cardName: $("#CardName").val(),
-            provider: $("#Provider").val(),
-            logoUrl: $("#LogoUrl").val()
-        }
-        console.dir(Emoneydata);
-        $.ajax({
-            url: 'http://localhost:5001/api/EMoneys',
-            type: 'post',
-            dataType: 'json',
-            data: Emoneydata,
-            success: function (data) {
-                alert('Succes');
-            },
-            error: function (requestObject, error, errorThrown) {
-                alert(error);
-                alert(errorThrown);
-            }
-            
-        });
-    }
+        //function IDGenerator() {
+
+        //    this.length = 8;
+        //    this.timestamp = +new Date;
+
+        //    var _getRandomInt = function (min, max) {
+        //        return Math.floor(Math.random() * (max - min + 1)) + min;
+        //    }
+
+        //    this.generate = function () {
+        //        var ts = this.timestamp.toString();
+        //        var parts = ts.split("").reverse();
+        //        var id = "";
+
+        //        for (var i = 0; i < this.length; ++i) {
+        //            var index = _getRandomInt(0, parts.length - 1);
+        //            id += parts[index];
+        //        }
+
+        //        return id;
+        //    }
+        //}
+        //var TempIDgenerator = new IDGenerator();
+        //var ID = TempIDgenerator.generate(); 
+        //$('<input>').attr({
+        //    type: 'hidden',
+        //    id: 'IDMNY',
+        //    for:'IDMNY',
+        //    value: ID
+        //}).appendTo('form');
     </script>
 }
 

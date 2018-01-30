@@ -4,7 +4,8 @@ namespace Artos.Management.Models
 {
     public class EmoneyValidModel
     {
-        
+        [Required]
+        public int ID { get; set; }
 
         [Required]
         public string CardName { get; set; }

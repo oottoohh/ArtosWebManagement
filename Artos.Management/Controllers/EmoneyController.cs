@@ -9,7 +9,10 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Artos.Management.Models;
 using Newtonsoft.Json.Linq;
+using Artos.Management.Models;
 using IdentityModel.Client;
+using Newtonsoft.Json;
+using System.Text;
 
 // For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -25,11 +28,11 @@ namespace Artos.Management.Controllers
 
             var client = new HttpClient();
             client.SetBearerToken(accessToken);
-            //var content = await client.GetStringAsync("http://localhost:5001/api/EMoneys");
+            var content = await client.GetStringAsync("http://localhost:5001/api/EMoneys");
 
-            //ViewBag.Json = JArray.Parse(content).ToString();
+            ViewBag.Json = JArray.Parse(content).ToString();
 
-            ViewData["Token"] = accessToken;
+            //ViewData["Token"] = accessToken;
             return View();
         }
 
@@ -37,6 +40,60 @@ namespace Artos.Management.Controllers
         public IActionResult CreateEmoney()
         {
             return View();
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Create([Bind("ID,CardName,Provider,LogoUrl")] EmoneyValidModel dtForm)
+        {
+            if (ModelState.IsValid)
+            {
+                var accessToken = await HttpContext.GetTokenAsync("access_token");
+                StringContent content = new StringContent(JsonConvert.SerializeObject(dtForm), Encoding.UTF8, "application/json");
+                var client = new HttpClient();
+                client.SetBearerToken(accessToken);
+                var result = await client.PostAsync("http://localhost:5001/api/EMoneys", content);
+                string resultContent = await result.Content.ReadAsStringAsync();
+                Console.WriteLine(resultContent);
+
+            }
+            return RedirectToAction(nameof(Index));
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Delete([Bind("ID,CardName,Provider,LogoUrl")] EmoneyValidModel dtForm)
+        {
+            if (ModelState.IsValid)
+            {
+                var accessToken = await HttpContext.GetTokenAsync("access_token");
+                StringContent content = new StringContent(JsonConvert.SerializeObject(dtForm), Encoding.UTF8, "application/json");
+                var client = new HttpClient();
+                client.SetBearerToken(accessToken);
+                var result = await client.PostAsync("http://localhost:5001/api/EMoneys", content);
+                string resultContent = await result.Content.ReadAsStringAsync();
+                Console.WriteLine(resultContent);
+
+            }
+            return RedirectToAction(nameof(Index));
+        }
+        public async Task<IActionResult> Details(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+            var accessToken = await HttpContext.GetTokenAsync("access_token");
+            var client = new HttpClient();
+            client.SetBearerToken(accessToken);
+            var Detailcontent = await client.GetStringAsync("http://localhost:5001/api/EMoneys/" + id);
+            if (Detailcontent == null)
+            {
+                return NotFound();
+            }else
+            {
+                ViewBag.detail = JArray.Parse(Detailcontent).ToString();
+            }
+
+            return RedirectToAction(nameof(Index));
         }
         public IActionResult Error()
         {

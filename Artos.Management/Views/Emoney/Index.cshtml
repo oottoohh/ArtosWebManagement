@@ -1,4 +1,5 @@
 ﻿@using Microsoft.AspNetCore.Authentication;
+@using Newtonsoft.Json;
 @{
     ViewData["Title"] = "E-Money Data";
     
@@ -9,7 +10,7 @@
         <div class="jumbotron">
             <h2>E-Money Data</h2>
             <hr>
-            <p><a class="btn btn-success btn-md" asp-action="CreateEmoney" role="button"><span class="fa fa-plus" aria-hidden="true"></span> Create E-Money Data</a></p>
+            <p><a class="btn btn-success btn-md" asp-action="CreateEMoney" role="button"><span class="fa fa-plus" aria-hidden="true"></span> Create E-Money Data</a></p>
         </div>
     </div>
     <div class="col-xs-12">
@@ -18,7 +19,7 @@
             </div>
             <!-- /.box-header -->
             <div class="box-body">
-                <table id="DataTable" class="table table-bordered table-hover">
+                <table id="example2" class="table table-bordered table-hover">
                     <thead>
                         <tr>
                             <th>No.</th>
@@ -35,9 +36,9 @@
                             <td>empty</td>
                             <td>empty</td>                            
                             <td style="text-align:center;">
-                                <div class="btn" role="group" aria-label="...">
-                                    <a href="#" class="btn btn-warning"><span class="fa fa-pencil-square-o" aria-hidden="true"></span> Edit</a>
-                                    <a href="#" class="btn btn-danger"><span class="fa fa-times" aria-hidden="true"></span> Delete</a>
+                                <div class="btn-crud">
+                                    <button  class="btn btn-warning"><span class="fa fa-pencil-square-o" aria-hidden="true"></span> Edit</button>
+                                    <button  class="btn btn-danger"><span class="fa fa-times" aria-hidden="true"></span> Delete</button>
                                 </div>
                             </td>
                         </tr>
@@ -59,78 +60,137 @@
     </div>
     <!-- /.col -->
 </div>
+<div class="modal modal-danger fade" id="modal-danger">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title">Are you sure want delete this data?</h4>
+            </div>
+            <div class="modal-body">
+                <div class="content-modal">
+
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-outline pull-left" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-outline">Delete</button>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
 @section Scripts {
+    
     <script>
+
         $(document).ready(function () {
-            $.ajax({
-                
-                type: "GET",
-                headers: { "Authorization": @await ViewContext.HttpContext.GetTokenAsync("access_token") },
-                dataType: "jsonp",
-                url: "http://localhost:5001/api/EMoneys",
-                success: function (data) {
-                    EmoneyListsucces(data);
-                },
-                error: function () {
-                    alert('Error Call API');
-                }
-            });
-            @*var Emoneys = @Html.Raw(@ViewBag.Json);
+            var dt = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(@ViewBag.Json));
+            var Emoneys = JSON.parse(dt);
             if (Emoneys != '')
             {
                 EmoneyListsucces(Emoneys);
             } else
             {
                 alert('Empty Data');
-            }*@
-    });
-
-    
-        function EmoneyListsucces(data) {
-            // Iterate over the collection of data  
-            $("#DataTable tbody").remove();
-            $.each(data, function (index, Emoney) {
-                // Add a row to the employee table  
-                EmoneyRow(Emoney);
-            });
-        }
-        function EmoneyRow(Emoney)
-        {
-            if ($("#DataTable tbody").length == 0) {
-                $("#DataTable").append("<tbody></tbody>");
             }
 
-            // Append row to <table>  
-            $("#DataTable tbody").append(
-                EmoneyBuildTableRow(Emoney));
+    });
+        $('#modal-danger').on('show.bs.modal', function (event) {
+            var button = $(event.relatedTarget);// Button that triggered the modal
+            var id = button.data('id');
+            var dt = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(@ViewBag.Json));
+            var Emoneys = JSON.parse(dt);
+            $.each(Emoneys, function (i, Emoney) {
+                // Add a row to the employee table
+                
+                if (id == Emoney.id) {                   
+                    FormDeleteRow(Emoney);                    
+                    return false;
+                }
+               
+            });
+        });
+        function FormDeleteRow(Emoney) {               
+            var contentForm =
+                '<div class="row">' +
+                '<div class="form-group">' +
+                '<label class="col-sm-4 control-label" >Card Name :</label>' +
+                '<div class="col-sm-4">' +
+                '<p class="form-control-static">' + Emoney.cardName + '</p>' +
+                '</div>' +
+                '</div >' +
+                '</div >' +
+                '<div class="row">' +                
+                '<div class="form-group">' +
+                '<label class="col-sm-4 control-label" >Provider:</label>' +
+                '<div class="col-sm-4">' +
+                '<p class="form-control-static">' + Emoney.provider + '</p>' +
+                '</div>' +
+                '</div >' +
+                '</div >' +
+                '<div class="row">' +
+                '<div class="form-group">' +
+                '<label class="col-sm-4 control-label" >Card Name :</label>' +
+                '<div class="col-sm-4">' +
+                '<p class="form-control-static">' + Emoney.logoUrl + '</p>' +
+                '</div>' +
+                '</div >' +
+                '</div >';
+            $('.content-modal').empty();
+            $('.modal-body > .content-modal').append(contentForm);
+        }
+        function EmoneyListsucces(Emoneys) {
+            // Iterate over the collection of data
+            $("#example2 tbody").remove();
+            $.each(Emoneys, function (index, Emoney) {
+                // Add a row to the employee table
+                EmoneyRow(index, Emoney);
+            });
+            $(function () {
+                $('#example2').DataTable()
+            })
+        }
+        function EmoneyRow(index, Emoney)
+        {
+            if ($("#example2 tbody").length == 0) {
+                $("#example2").append("<tbody></tbody>");
+            }
+
+            // Append row to <table>
+            $("#example2 tbody").append(
+                EmoneyBuildTableRow(index, Emoney));
 
         }
-        function EmoneyBuildTableRow(Emoney) {
+        function EmoneyBuildTableRow(index, Emoney) {
+            var i = index + 1;
             var newRow = "<tr>" +
-                "<td>" + Emoney.id + "</td>" +
+                "<td>" + i + "</td>" +
                 "<td>" + Emoney.cardName + "</td>" +
                 "<td>" + Emoney.provider + "</td>" +
                 "<td>" + Emoney.logoUrl + "</td>" +
                 "<td style='text-align:center;'>" +
-                "<div class='btn' role='group'>" +
-                '<a href="#" class="btn btn-warning"><span class="fa fa-pencil-square-o" aria-hidden="true"></span> Edit</a>' +
-                '<a href="#" class="btn btn-danger"><span class="fa fa-times" aria-hidden="true"></span> Delete</a>' +
+                "<div class='btn-crud'>" +
+                '<button data-toggle="modal" data-target="#EditModal" data-whatever="DataEdit" class="btn btn-warning"><span class="fa fa-pencil-square-o" aria-hidden="true"></span> Edit</button>' +
+                '<button data-toggle="modal" data-target="#modal-danger" data-id='+Emoney.id+' class="btn btn-danger"><span class="fa fa-times" aria-hidden="true"></span> Delete</button>' +
                  '</div>' +
                 '</td>' +
                 "</tr>";
-
             return newRow;
         }
-        function handleException(request, message, error) {
-            var msg = "";
-            msg += "Code: " + request.status + "\n";
-            msg += "Text: " + request.statusText + "\n";
-            if (request.responseJSON != null) {
-                msg += "Message" + request.responseJSON.Message + "\n";
-            }
+        //function handleException(request, message, error) {
+        //    var msg = "";
+        //    msg += "Code: " + request.status + "\n";
+        //    msg += "Text: " + request.statusText + "\n";
+        //    if (request.responseJSON != null) {
+        //        msg += "Message" + request.responseJSON.Message + "\n";
+        //    }
 
-            alert(msg);
-        }  
+        //    alert(msg);
+        //}
     </script>
 }
 
